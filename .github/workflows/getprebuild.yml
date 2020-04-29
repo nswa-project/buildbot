@@ -38,6 +38,7 @@ jobs:
       run: |
         cd build/openwrt
         cp ../../configs/96-x86_64 .config
+        make defconfig
         make -j`nproc` toolchain/install
         tar cJf prebuild.tar.xz build_dir staging_dir dl
 
