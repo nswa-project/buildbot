@@ -36,7 +36,6 @@ jobs:
  
     - name: compile
       run: |
-        ./buildbot.sh --openwrt-dir build/openwrt --make-target toolchain/install
         cd build/openwrt
         cp ../../configs/96-x86_64 .config
         make defconfig
