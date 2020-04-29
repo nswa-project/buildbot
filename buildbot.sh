@@ -38,6 +38,14 @@ while true ; do
 			;;
 		--openwrt-dir)
 			TARGET_DIR="$1"
+			shift=
+			;;
+		--make-jobs)
+			MAKE_JOBS="$1"
+			shift
+			;;
+		--make-target)
+			MAKE_TARGET="$1"
 			shift
 			;;
 		--test-build)
@@ -58,6 +66,7 @@ while true ; do
 done
 
 TARGET_DIR="${TARGET_DIR:-.}"
+[ -z "$MAKE_JOBS" ] && MAKE_JOBS=`nproc`
 
 for i in `ls $PREFIX/configs`; do
 	if [[ -n "$INCLUDE_TARGETS" && ! " $INCLUDE_TARGETS " =~ " $i " ]]; then
@@ -74,11 +83,11 @@ for i in `ls $PREFIX/configs`; do
 
 	[ "$TEST_BUILD" = '1' ] && continue
 
-	rm "$TARGET_DIR/.config.old"
+	rm -f "$TARGET_DIR/.config.old"
 	cp "$PREFIX/configs/$i" "$TARGET_DIR/.config"
 
 	(cd "$TARGET_DIR"; make defconfig)
 	evck "$?"
-	(cd "$TARGET_DIR"; make -j`nproc`)
+	(cd "$TARGET_DIR"; make "-j${MAKE_JOBS}" ${MAKE_TARGET})
 	evck "$?"
 done

@@ -1,0 +1,50 @@
+name: get-prebuild
+
+on:
+  push:
+    paths:
+    - '.emit/get-prebuild'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+
+    - name: build-dep
+      run: |
+        pwd
+        sudo apt -y update
+        sudo apt -y install subversion g++ zlib1g-dev build-essential git python python3 python3-distutils libncurses5-dev gawk gettext unzip file libssl-dev wget libelf-dev ecj fastjar java-propose-classpath
+
+    - name: fetch
+      run: |
+        curl https://storage.googleapis.com/git-repo-downloads/repo > ./repo
+        chmod +x ./repo
+        mkdir build
+        cd build
+        ../repo init -u https://github.com/nswa-project/ranga.git -b master --depth 1
+        ../repo sync
+
+    - name: feeds
+      run: |
+        cd build/openwrt
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a
+        ../ranga/scripts/apply-feeds-patches.sh
+ 
+    - name: compile
+      run: |
+        ./buildbot.sh --openwrt-dir build/openwrt --make-target toolchain/install
+        cd build/openwrt
+        echo =========
+        cat .config
+        echo =========
+        tar cJf prebuild.tar.xz build_dir staging_dir dl
+
+    - name: upload
+      uses: actions/upload-artifact@master
+      with:
+        name: build
+        path: ./build/openwrt/prebuild.tar.xz
