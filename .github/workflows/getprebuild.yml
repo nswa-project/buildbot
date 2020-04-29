@@ -38,9 +38,12 @@ jobs:
       run: |
         ./buildbot.sh --openwrt-dir build/openwrt --make-target toolchain/install
         cd build/openwrt
+        cp ../../configs/96-x86_64 .config
+        make defconfig
         echo =========
         cat .config
         echo =========
+        make -j4 toolchain/install
         tar cJf prebuild.tar.xz build_dir staging_dir dl
 
     - name: upload
