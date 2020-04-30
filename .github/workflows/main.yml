@@ -45,7 +45,7 @@ jobs:
  
     - name: compile
       run: |
-        ./buildbot.sh --openwrt-dir build/openwrt --verbose
+        ./buildbot.sh --openwrt-dir build/openwrt 2>&1
 
     - name: upload
       uses: actions/upload-artifact@master
