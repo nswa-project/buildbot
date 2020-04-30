@@ -38,7 +38,7 @@ while true ; do
 			;;
 		--openwrt-dir)
 			TARGET_DIR="$1"
-			shift=
+			shift
 			;;
 		--make-jobs)
 			MAKE_JOBS="$1"
