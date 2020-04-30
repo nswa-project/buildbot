@@ -15,6 +15,7 @@ jobs:
 
     - name: build-dep
       run: |
+        false || true
         pwd
         sudo apt -y update
         sudo apt -y install subversion g++ zlib1g-dev build-essential git python python3 python3-distutils libncurses5-dev gawk gettext unzip file libssl-dev wget libelf-dev ecj fastjar java-propose-classpath
@@ -45,8 +46,8 @@ jobs:
  
     - name: compile
       run: |
-        ./buildbot.sh --openwrt-dir build/openwrt 2>&1
-        cat 1.txt
+        ./buildbot.sh --openwrt-dir build/openwrt 2>&1 || true
+        cat 1.txt || true
         cat /home/runner/work/buildbot/buildbot/1.txt
 
     - name: upload
