@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
 
     - name: build-dep
       run: |
@@ -26,24 +26,28 @@ jobs:
         cd build
         ../repo init -u https://github.com/nswa-project/ranga.git -b master --depth 1
         ../repo sync
+        tar czf test.tar.gz ranga
 
-    - name: feeds
-      run: |
-        cd build/openwrt
-        ./scripts/feeds update -a
-        ./scripts/feeds install -a
-        ../ranga/scripts/apply-feeds-patches.sh
+#    - name: feeds
+#      run: |
+#        cd build/openwrt
+#        ./scripts/feeds update -a
+#        ./scripts/feeds install -a
+#        ../ranga/scripts/apply-feeds-patches.sh
  
-    - name: compile
-      run: |
-        cd build/openwrt
-        cp ../../configs/96-x86_64 .config
-        make defconfig
-        make -j`nproc` toolchain/install
-        tar cJf prebuild.tar.xz build_dir staging_dir dl
+#    - name: compile
+#      run: |
+#        cd build/openwrt
+#        cp ../../configs/96-x86_64 .config
+#        make defconfig
+#        make -j`nproc` toolchain/install
+#        tar cJf prebuild.tar.xz build_dir staging_dir dl
 
     - name: upload
-      uses: actions/upload-artifact@master
+      uses: svenstaro/upload-release-action@v1-release
       with:
-        name: build
-        path: ./build/openwrt/prebuild.tar.xz
+        repo_token: '02ab468b48d4977f858a8ffe7349ead38cd5d8fa'
+        file: ./build/ranga.tar.gz
+        asset_name: test.tar.gz
+        tag: ${{ github.ref }}
+        overwrite: true
