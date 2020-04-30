@@ -46,7 +46,7 @@ jobs:
     - name: upload
       uses: svenstaro/upload-release-action@v1-release
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        repo_token: 67aeafcc54b1230ce058ef5c20694963fb14578c
         file: ./build/test.tar.gz
         asset_name: test.tar.gz
         tag: prebuild-assets
