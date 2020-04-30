@@ -36,17 +36,14 @@ jobs:
  
     - name: compile
       run: |
-        cd build/openwrt
-        cp ../../configs/96-x86_64 .config
-        make defconfig
-        make -j`nproc` toolchain/install
-        tar czf ../../prebuild.tar.xz build_dir staging_dir dl
+        ./buildbot --openwrt-dir build/openwrt --make-target toolchain/install
+        tar czf ../../prebuild.tar.gz build_dir staging_dir dl
 
     - name: upload
       uses: svenstaro/upload-release-action@v1-release
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ./prebuild.tar.xz
-        asset_name: prebuild.tar.xz
+        file: ./prebuild.tar.gz
+        asset_name: prebuild.tar.gz
         tag: prebuild-assets
         overwrite: true

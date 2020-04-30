@@ -88,6 +88,7 @@ for i in `ls $PREFIX/configs`; do
 
 	(cd "$TARGET_DIR"; make defconfig)
 	evck "$?"
+	info "invoke make -j${MAKE_JOBS} ${MAKE_TARGET}"
 	(cd "$TARGET_DIR"; make "-j${MAKE_JOBS}" ${MAKE_TARGET})
 	evck "$?"
 done
