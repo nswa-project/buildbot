@@ -47,7 +47,7 @@ jobs:
       uses: svenstaro/upload-release-action@v1-release
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ./build/ranga.tar.gz
+        file: ./build/test.tar.gz
         asset_name: test.tar.gz
         tag: ${{ github.ref }}
         overwrite: true
