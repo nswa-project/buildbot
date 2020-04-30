@@ -46,7 +46,7 @@ jobs:
     - name: upload
       uses: svenstaro/upload-release-action@v1-release
       with:
-        repo_token: '02ab468b48d4977f858a8ffe7349ead38cd5d8fa'
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ./build/ranga.tar.gz
         asset_name: test.tar.gz
         tag: ${{ github.ref }}
