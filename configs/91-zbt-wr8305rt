@@ -1,7 +1,0 @@
-CONFIG_TARGET_ramips=y
-CONFIG_TARGET_ramips_mt7620=y
-CONFIG_TARGET_ramips_mt7620_DEVICE_zbt-wr8305rt=y
-
-# CONFIG_PACKAGE_kmod-mt76 is not set
-
-CONFIG_RANGA_MTK_RT2860_LED_SYSFS="zbt-wr8305rt:green:wifi"

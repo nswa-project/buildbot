@@ -24,6 +24,9 @@ while true ; do
 		shift
 
 		case "${opt}" in
+		--verbose)
+			VERBOSE=1
+			;;
 		--include-targets)
 			INCLUDE_TARGETS="$1"
 			shift
@@ -67,6 +70,11 @@ done
 
 TARGET_DIR="${TARGET_DIR:-.}"
 [ -z "$MAKE_JOBS" ] && MAKE_JOBS=`nproc`
+
+if [ "$VERBOSE" = "1" ]; then
+	MAKE_JOBS=1
+	MAKE_TARGET="V=s $MAKE_TARGET"
+fi
 
 for i in `ls $PREFIX/configs`; do
 	if [[ -n "$INCLUDE_TARGETS" && ! " $INCLUDE_TARGETS " =~ " $i " ]]; then
