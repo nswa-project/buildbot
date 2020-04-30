@@ -48,7 +48,8 @@ jobs:
       run: |
         ./buildbot.sh --openwrt-dir build/openwrt 2>&1 || true
         cat 1.txt || true
-        cat /home/runner/work/buildbot/buildbot/1.txt
+        echo ===
+        cat 2.txt
 
     - name: upload
       uses: actions/upload-artifact@master
