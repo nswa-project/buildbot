@@ -49,5 +49,5 @@ jobs:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ./build/test.tar.gz
         asset_name: test.tar.gz
-        tag: ${{ github.ref }}
+        tag: prebuild-assets
         overwrite: true
