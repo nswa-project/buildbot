@@ -15,8 +15,8 @@ jobs:
     - name: build-dep
       run: |
         pwd
-#        sudo apt -y update
-#        sudo apt -y install subversion g++ zlib1g-dev build-essential git python python3 python3-distutils libncurses5-dev gawk gettext unzip file libssl-dev wget libelf-dev ecj fastjar java-propose-classpath
+        sudo apt -y update
+        sudo apt -y install subversion g++ zlib1g-dev build-essential git python python3 python3-distutils libncurses5-dev gawk gettext unzip file libssl-dev wget libelf-dev ecj fastjar java-propose-classpath
 
     - name: fetch
       run: |
@@ -26,28 +26,27 @@ jobs:
         cd build
         ../repo init -u https://github.com/nswa-project/ranga.git -b master --depth 1
         ../repo sync
-        tar czf test.tar.gz ranga
 
-#    - name: feeds
-#      run: |
-#        cd build/openwrt
-#        ./scripts/feeds update -a
-#        ./scripts/feeds install -a
-#        ../ranga/scripts/apply-feeds-patches.sh
+    - name: feeds
+      run: |
+        cd build/openwrt
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a
+        ../ranga/scripts/apply-feeds-patches.sh
  
-#    - name: compile
-#      run: |
-#        cd build/openwrt
-#        cp ../../configs/96-x86_64 .config
-#        make defconfig
-#        make -j`nproc` toolchain/install
-#        tar cJf prebuild.tar.xz build_dir staging_dir dl
+    - name: compile
+      run: |
+        cd build/openwrt
+        cp ../../configs/96-x86_64 .config
+        make defconfig
+        make -j`nproc` toolchain/install
+        tar czf ../../prebuild.tar.xz build_dir staging_dir dl
 
     - name: upload
       uses: svenstaro/upload-release-action@v1-release
       with:
-        repo_token: 67aeafcc54b1230ce058ef5c20694963fb14578c
-        file: ./build/test.tar.gz
-        asset_name: test.tar.gz
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ./prebuild.tar.xz
+        asset_name: prebuild.tar.xz
         tag: prebuild-assets
         overwrite: true
