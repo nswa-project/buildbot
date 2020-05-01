@@ -37,14 +37,15 @@ jobs:
     - name: compile
       run: |
         ./buildbot.sh --configs x86_64 --openwrt-dir build/openwrt --make-target toolchain/install
+        cd build/openwrt
         tar czf ../../prebuild-x86_64.tar.gz build_dir staging_dir dl
         rm -rf build_dir staging_dir
 
-    - name: upload
+    - name: upload-x86_64
       uses: svenstaro/upload-release-action@v1-release
       with:
         repo_token: ${{ secrets.PAT }}
-        file: ./prebuild.tar.gz
-        asset_name: prebuild.tar.gz
+        file: ./prebuild-x86_64.tar.gz
+        asset_name: prebuild-x86_64.tar.gz
         tag: prebuild-assets
         overwrite: true
