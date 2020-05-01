@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
 
     - name: build-dep
       run: |
@@ -47,9 +47,10 @@ jobs:
     - name: compile
       run: |
         ./buildbot.sh --openwrt-dir build/openwrt 2>&1
+        ls -l build/openwrt || true
 
     - name: upload
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@v2
       with:
         name: build
-        path: ./build/openwrt/out
+        path: ./build/openwrt/bin
