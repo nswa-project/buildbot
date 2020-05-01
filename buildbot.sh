@@ -27,12 +27,8 @@ while true ; do
 		--verbose)
 			VERBOSE=1
 			;;
-		--include-targets)
-			INCLUDE_TARGETS="$1"
-			shift
-			;;
-		--exclude-targets)
-			EXCLUDE_TARGETS="$1"
+		--configs)
+			CONFIGS="-groups/$1"
 			shift
 			;;
 		--ls-targets)
@@ -76,23 +72,13 @@ if [ "$VERBOSE" = "1" ]; then
 	MAKE_TARGET="V=s $MAKE_TARGET"
 fi
 
-for i in `ls $PREFIX/configs`; do
-	if [[ -n "$INCLUDE_TARGETS" && ! " $INCLUDE_TARGETS " =~ " $i " ]]; then
-		info "ignore $i"
-		continue
-	fi
-
-	if [[ -n "$EXCLUDE_TARGETS" && " $EXCLUDE_TARGETS " =~ " $i " ]]; then
-		info "ignore $i"
-		continue
-	fi
-
+for i in `ls $PREFIX/configs${CONFIGS}`; do
 	info "==> $i"
 
 	[ "$TEST_BUILD" = '1' ] && continue
 
 	rm -f "$TARGET_DIR/.config.old"
-	cp "$PREFIX/configs/$i" "$TARGET_DIR/.config"
+	cp "$PREFIX/configs${CONFIGS}/$i" "$TARGET_DIR/.config"
 
 	(cd "$TARGET_DIR"; make defconfig)
 	evck "$?"

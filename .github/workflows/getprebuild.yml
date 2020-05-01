@@ -36,13 +36,14 @@ jobs:
  
     - name: compile
       run: |
-        ./buildbot.sh --openwrt-dir build/openwrt --make-target toolchain/install
-        tar czf ../../prebuild.tar.gz build_dir staging_dir dl
+        ./buildbot.sh --configs x86_64 --openwrt-dir build/openwrt --make-target toolchain/install
+        tar czf ../../prebuild-x86_64.tar.gz build_dir staging_dir dl
+        rm -rf build_dir staging_dir
 
     - name: upload
       uses: svenstaro/upload-release-action@v1-release
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        repo_token: ${{ secrets.PAT }}
         file: ./prebuild.tar.gz
         asset_name: prebuild.tar.gz
         tag: prebuild-assets
