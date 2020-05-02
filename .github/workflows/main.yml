@@ -47,8 +47,13 @@ jobs:
     - name: compile
       run: |
         ./prebuild-dl.sh x86_64 build/openwrt
-        ./buildbot.sh --configs x86_64 --openwrt-dir build/openwrt 2>&1
+        #./buildbot.sh --configs x86_64 --openwrt-dir build/openwrt 2>&1
         ls -l build/openwrt || true
+        echo ---
+        ls -l build/openwrt/build_dir || true
+        echo ---
+        ls -l build/openwrt/staging_dir || true
+        exit 1
 
     - name: upload
       uses: actions/upload-artifact@v2
