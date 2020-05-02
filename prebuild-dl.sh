@@ -7,5 +7,5 @@ cd "$2"
 rm -rf build_dir staging_dir
 
 wget -O _.tar.gz "${BASE_URL}${1}.tar.gz" || exit 1
-tar xvf _.tar.gz || exit 1
+tar xzf _.tar.gz || exit 1
 rm -f _.tar.gz
