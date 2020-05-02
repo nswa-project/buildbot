@@ -46,7 +46,8 @@ jobs:
  
     - name: compile
       run: |
-        ./buildbot.sh --openwrt-dir build/openwrt 2>&1
+        ./prebuild-dl.sh x86_64 build/openwrt
+        ./buildbot.sh --configs x86_64 --openwrt-dir build/openwrt 2>&1
         ls -l build/openwrt || true
 
     - name: upload
