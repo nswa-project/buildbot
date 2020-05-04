@@ -47,7 +47,7 @@ jobs:
     - name: compile
       run: |
         #./prebuild-clean.sh build/openwrt
-        ./buildbot.sh --configs mips --openwrt-dir build/openwrt --verbose 2>&1
+        ./buildbot.sh --configs mips --openwrt-dir build/openwrt 2>&1
         #./prebuild-clean.sh build/openwrt
         #./buildbot.sh --configs mipsel --openwrt-dir build/openwrt 2>&1
         #./prebuild-dl.sh x86_64 build/openwrt
